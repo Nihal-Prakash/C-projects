@@ -20,7 +20,6 @@ int main(void) {
     printf("Enter number of students to be registered: ");
     scanf("%d", &num);
 
-    
     pfile = fopen("Student_records.txt", "a");
 
     if (pfile == NULL) {
@@ -63,3 +62,4 @@ void scanStudent(Student* student) {
     scanf("%d", &fullTime);
     student->isFullTime = (fullTime != 0);
 }
+
