@@ -1,24 +1,14 @@
-Name: Ash
-Age: 15
-GPA: 4.00
-Fulltime? : Yes
-Name: Misty
-Age: 15
-GPA: 4.00
-Fulltime? : No
-Name: Brock
-Age: 20
-GPA: 3.80
-Fulltime? : Yes
-
 Name: Dholu
 Age: 8
-GPA: 3.00
+GPA: 4.00
 Fulltime? : Yes
 
+Roll no.:    1
 
 Name: Bholu
 Age: 8
-GPA: 3.00
+GPA: 4.00
 Fulltime? : No
+
+Roll no.:    2
 

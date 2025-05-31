@@ -9,16 +9,18 @@ typedef struct {
 } Student;
 
 FILE *pfile;
-void printStudent(Student student);
+void printStudent(Student student, int roll);
 void scanStudent(Student* student);
 
 int main(void) {
-    Student student1 = {"", 0, 0.0, true};
-    Student student2 = {"", 0, 0.0, true};
-    
-    scanStudent(&student1);
-    scanStudent(&student2);
 
+    int num = 0;
+
+    printf("Welcome to the Student Record System!\n");
+    printf("Enter number of students to be registered: ");
+    scanf("%d", &num);
+
+    
     pfile = fopen("Student_records.txt", "a");
 
     if (pfile == NULL) {
@@ -26,19 +28,25 @@ int main(void) {
         return 1;
     }
 
-    printStudent(student1);
-    printStudent(student2);
+    for (int i = 0; i < num; i++) {
+        Student student;
+        scanStudent(&student);
+
+        printStudent(student, i+1);
+    }
 
     fclose(pfile);
+
     return 0;
 }
 
-void printStudent(Student student) {
-    fprintf(pfile, "\n");
+void printStudent(Student student, int roll) {
     fprintf(pfile, "Name: %s\n", student.name);
     fprintf(pfile, "Age: %d\n", student.age);
     fprintf(pfile, "GPA: %.2f\n", student.gpa);
     fprintf(pfile, "Fulltime? : %s\n", student.isFullTime ? "Yes" : "No");
+    fprintf(pfile, "\n");
+    fprintf(pfile, "Roll no.: %4d\n", roll);
     fprintf(pfile, "\n");
 }
 
