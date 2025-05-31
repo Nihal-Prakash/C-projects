@@ -1,14 +1,20 @@
-Name: Dholu
-Age: 8
+Roll no.:    1
+
+Name: Ash
+Age: 10
 GPA: 4.00
 Fulltime? : Yes
 
-Roll no.:    1
+Roll no.:    2
 
-Name: Bholu
-Age: 8
+Name: Brock
+Age: 15
 GPA: 4.00
 Fulltime? : No
 
-Roll no.:    2
+Roll no.:    3
 
+Name: Misty
+Age: 12
+GPA: 4.00
+Fulltime? : No
