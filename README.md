@@ -1,12 +1,12 @@
 # C-projects
 ## Student Record System
 
- [[C-Website]]
+[[C-Website]]
 
 *Features*
 1. Add students 🟢
 2. Deleting students
-3. getting data of a student from their Roll.no or name
+3. getting data of a student from their Roll.no or name 🟢
 4. assigning a Roll.no 🟢
 5. Student Records database 🟢
 
@@ -19,3 +19,4 @@
 	   https://zetcode.com/db/sqlitec/
 	   https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
 	   ZebraCode series
+4. MySQL

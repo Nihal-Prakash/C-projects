@@ -5,6 +5,7 @@
 
 int insert_st(void);
 int read_st(void);
+int readfilter_st(void);
 static int callback(void *record, int argc, char **argv, char **nameRef);
 
 int main(void){
@@ -47,7 +48,7 @@ int main(void){
     sqlite3_close(db);
 
     printf("----WELCOME TO STUDENT RECORD SYSTEM----\n");
-    printf("Enter mode: [I]nsertion, [R]ead");
+    printf("Enter mode: [I]nsertion, [R]ead, [F]ilter: ");
     scanf(" %c", &mode);
 
     switch (mode)
@@ -60,6 +61,11 @@ int main(void){
     case 'R':
     case 'r':
         read_st();
+        break;
+
+    case 'F':
+    case 'f':
+        readfilter_st();
         break;
 
     default:
@@ -175,4 +181,73 @@ static int callback(void *record, int argc, char **argv, char **nameRef){
 
     // 4. Return 0 to tell SQLite: "Everything is fine, keep going."
     return 0;
+}
+
+int readfilter_st(void){
+
+    char mode;
+
+    sqlite3 *db;
+    char *err_msg = 0;
+    int conn;
+
+    //Callback function called
+    const char* record = "\n";
+
+    //Open database
+    conn = sqlite3_open("Student_Records.db", &db);
+
+    //Do a check for database connection
+    if(conn != SQLITE_OK) {
+        fprintf(stderr, "Cannot open database: %s \n", sqlite3_errmsg(db));
+        return 1;
+    } else {
+        fprintf (stderr, "Database was opened successfully \n");
+    }
+
+    
+    char sql_qry[256];
+
+    printf("Filter by [N]ame or [I]d: ");
+    scanf(" %c", &mode);
+
+    switch (mode)
+    {
+    case 'N':
+    case 'n': {
+
+        char name[64];
+        printf("Enter Student first name: ");
+        scanf(" %63s", &name);
+
+        //Create Sql query
+        sprintf( sql_qry, "SELECT * FROM records WHERE firstname = '%s';", name);
+        
+        break;}
+    case 'I':
+    case 'i': {
+
+        int id;
+        printf("Enter Student ID: ");
+        scanf("%d", &id);
+
+        //Create Sql query
+        sprintf( sql_qry, "SELECT * FROM records WHERE student_id = '%d';", id);
+        break;}
+
+    default:
+        break;
+    }
+
+    conn = sqlite3_exec(db, sql_qry, callback, (void*) record, &err_msg);
+
+    if(conn != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s \n", err_msg);
+        sqlite3_free(err_msg);
+    } else{
+        fprintf(stdout, "Query successful");
+    }
+    
+    sqlite3_close(db);
+
 }
