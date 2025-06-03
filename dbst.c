@@ -6,6 +6,7 @@
 int insert_st(void);
 int read_st(void);
 int readfilter_st(void);
+int delete_st(void);
 static int callback(void *record, int argc, char **argv, char **nameRef);
 
 int main(void){
@@ -48,10 +49,15 @@ int main(void){
     sqlite3_close(db);
 
     printf("----WELCOME TO STUDENT RECORD SYSTEM----\n");
-    printf("Enter mode: [I]nsertion, [R]ead, [F]ilter: ");
-    scanf(" %c", &mode);
 
-    switch (mode)
+    while(1){
+	char mode;
+    printf("Enter mode: [I]nsertion, [R]ead, [F]ilter, [D]eletion, [E]xit: ");
+	scanf(" %c", &mode);
+	
+	if (mode == 'E' || mode == 'e'){ break ;}
+	
+	 switch (mode)
     {
     case 'I':
     case 'i':
@@ -68,11 +74,16 @@ int main(void){
         readfilter_st();
         break;
 
+    case 'D':
+    case 'd':
+        delete_st();
+        break;
+
     default:
         printf("Invalid input\n");
         break;
     }
-
+}
     return 0;
 }
 
@@ -153,7 +164,7 @@ int read_st(void){
         fprintf(stderr, "SQL error: %s \n", err_msg);
         sqlite3_free(err_msg);
     } else{
-        fprintf(stdout, "Query successful");
+        fprintf(stdout, "\n");
     }
     
     sqlite3_close(db);
@@ -245,9 +256,37 @@ int readfilter_st(void){
         fprintf(stderr, "SQL error: %s \n", err_msg);
         sqlite3_free(err_msg);
     } else{
-        fprintf(stdout, "Query successful");
+        fprintf(stdout, "\n");
     }
     
     sqlite3_close(db);
 
+}
+
+int delete_st(void){
+
+    sqlite3 *db;
+    char *err_msg = 0;
+
+    int conn;
+    conn = sqlite3_open("Student_Records.db", &db);
+
+    if(conn != SQLITE_OK){
+        fprintf(stderr, "Cannot connect to database");
+        sqlite3_close(db);
+        return 1;
+    }
+
+    char sql[128];
+    int id;
+
+    printf("Which student record to be deleted?\n");
+    printf("WARNING! THIS ACTION IS IRREVERSIBLE\n");
+    printf("Enter Student ID: ");
+    scanf("%d", &id);
+    sprintf( sql, "DELETE FROM records WHERE student_id = %d;", id);
+    conn = sqlite3_exec(db, sql, 0, 0, &err_msg);
+
+
+    sqlite3_close(db);
 }
